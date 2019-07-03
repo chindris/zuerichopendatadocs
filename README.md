@@ -9,9 +9,11 @@ This document describes the open data API of zuerich.com for retrieving informat
 
 ## API Endpoints
 
-The main endpoint of the api is located at https://www.zuerich.com/data
+The main endpoint of the api is located at https://www.zuerich.com/data. The API can be used to retrieve all the available categories, or to retrieve all the objects tagged with a specific category.
 
-By just calling the endpoint, without any other parameters, the result is a list of all the available categories. The category items are stored as a hierarchical tree, so each of the category item has also a reference to its parent. If the parent is 0, then the category is a root item. An excerpt from the result list can be seen bellow:
+### Categories list
+
+By just calling the endpoint, https://www.zuerich.com/data, without any other parameters, the result is a list of all the available categories. The category items are stored as a hierarchical tree, so each of the category item has also a reference to its parent. If the parent is 0, then the category is a root item. An excerpt from the result list can be seen bellow:
 
 ```json
 [
@@ -60,8 +62,9 @@ By just calling the endpoint, without any other parameters, the result is a list
     path: "/data/gastronomy/restaurants/cuisine/american"
 }]
 ```
+The **id** represents the internal id of the category. The **parent** represents the id of the parent for the category item. If 0, the category is a root item. The **name** represents the actual name or label of the category (this is a translatable field) and the **path** contains the location where all the objects tagged with the respective category item can be found.
 
-The **name** field is actually an object which contains the name of the category item in all the four languages of the site: German(de), English (en), French (fr) and Italian (it). The value of the **path** field contains the URL that can be used to retrieve all the objects tagged with the respective category item.
+### Retrieving objects
 
 By appending the path of a category to the API endpoint, you can get all the objects which are tagged with that respective category. For example, to get all the objects tagged with *American*, the following path can be used https://www.zuerich.com/data/gastronomy/restaurants/cuisine/american. The result would be a list of all the American cuisine restaurants, for example:
 
@@ -168,32 +171,37 @@ By appending the path of a category to the API endpoint, you can get all the obj
 }]
 ```
 
-The fields which do not support translation are just returning their value directly. The ones which can have a translation are objects having the language codes as properties.
+## Translations
+Some of the fields support translations. For those fields, the returned value is actually an object containing the language codes as properties and the actual field, translated in that language, as value. The field which do not support translation will just return their value directly. As an example in the above snipped, the **openingDays** field does not support translations, while the **name** supports it.
 
-The **@type** attribute of the object can have the following values:
-- **LodgingBusiness** for accommodations.
-- **Place** for places.
-- **LocalBusiness** for restaurants / cafes.
+## Schema.org integration
 
-The **@type** attribute matches actually the schema.org definitions for Places (https://schema.org/Place), Lodging Business (https://schema.org/LodgingBusiness) and Local Business (https://schema.org/LocalBusiness). There are, however, a few fields which are not schema.org standard. Here is the full list of non standard fields:
-- All types:
-  - copyright
-  - cc
-  - category: a list of categories this object is tagged with on the site.
-  - title_teaser: a special title that is used when the object is displayed as a teaser (in lists of results for example).
-  - text_teaser: same as the title_teaser, a special description to be used when displaying the object as a teaser.
-  - osm_id: the open street map node id.
-  - updated: the date and time the object was last updated on the site
-- Place specific fields:
-  - detailedInformation: a list with short text items containing some more highlights of the place.
-  - zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
-  - zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
-  - place: can have one or more from the following values: Indoors, Outdoors.
-  - openingDays: a comma separated list of all the days when the place is open.
-- LocalBusiness specific fields:
-  - detailedInformation: a list with short text items containing some more highlights of the restaurant / cafe.
-  - zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
-  - zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
-  - openingDays: a comma separated list of all the days when the restaurant / cafe is open.
+Some of the returned fields in the objects are also schema.org standard. The **@type** attribute of the objects identifies the schema.org type, and can have the following values
+- **LodgingBusiness** for accommodations (https://schema.org/LodgingBusiness).
+- **Place** for places (https://schema.org/Place).
+- **LocalBusiness** for restaurants / cafes (https://schema.org/LocalBusiness).
 
-As mentioned above, each object exposes the **osm_id** field, for the integration with the open street maps service. The value stored in that field should be the OSM node id, so it can be used to access the node on the map, like *https://www.openstreetmap.org/node/xxxxxxx*.
+There are, however, a few custom fields which are not schema.org standard. Here is the full list of the non standard fields:
+### Available on all the types:
+- copyright
+- cc
+- category: a list of categories this object is tagged with on the site.
+- title_teaser: a special title that is used when the object is displayed as a teaser (in lists of results for example).
+- text_teaser: same as the title_teaser, a special description to be used when displaying the object as a teaser.
+- osm_id: the open street map node id.
+- updated: the date and time the object was last updated on the site
+## Place specific fields:
+- detailedInformation: a list with short text items containing some more highlights of the place.
+- zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
+- zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
+- place: can have one or more from the following values: Indoors, Outdoors.
+- openingDays: a comma separated list of all the days when the place is open.
+### LocalBusiness specific fields:
+- detailedInformation: a list with short text items containing some more highlights of the restaurant / cafe.
+- zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
+- zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
+- openingDays: a comma separated list of all the days when the restaurant / cafe is open.
+
+## Open Street Map integration
+
+Each object exposes the **osm_id** field, for the integration with the open street map service. Not all the objects have a value for this field. If a value exists, it should be the OSM node id, so it can be used to access the location on the map, like *https://www.openstreetmap.org/node/xxxxxxx*.
