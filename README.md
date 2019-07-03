@@ -206,3 +206,10 @@ There are, however, a few custom fields which are not schema.org standard. The f
 ## Open Street Map integration
 
 Each object exposes the **osm_id** field, for the integration with the open street map service. Not all the objects have a value for this field. If a value exists, it should be the OSM node id, so it can be used to access the location on the map, like *https://www.openstreetmap.org/node/xxxxxxx*.
+
+## License
+
+The data published here is available free of charge and can be freely reused under a [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/) license. The data may be:
+- Reproduced, disseminated and made available to others
+- Augmented and edited
+- Used commercially
