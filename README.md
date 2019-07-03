@@ -185,8 +185,7 @@ Some of the returned fields in the objects are also schema.org standard. The **@
 
 There are, however, a few custom fields which are not schema.org standard. The full list of non-standard fields, per each object type, can be seen bellow.
 - Available on all the types:
-  - copyright
-  - cc
+  - copyright: The data published here is available free of charge and can be freely reused under a [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/) license.
   - category: a list of categories this object is tagged with on the site.
   - title_teaser: a special title that is used when the object is displayed as a teaser (in lists of results for example).
   - text_teaser: same as the title_teaser, a special description to be used when displaying the object as a teaser.
