@@ -210,6 +210,6 @@ Each object exposes the **osm_id** field, for the integration with the open stre
 ## License
 
 The data published here is available free of charge and can be freely reused under a [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/) license. The data may be:
-- Reproduced, disseminated and made available to others
-- Augmented and edited
-- Used commercially
+- Reproduced, disseminated and made available to others.
+- Augmented and edited.
+- Used commercially.
