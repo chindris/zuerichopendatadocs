@@ -64,7 +64,7 @@ By just calling the endpoint, https://www.zuerich.com/data, without any other pa
 ```
 The **id** represents the internal id of the category. The **parent** represents the id of the parent for the category item. If 0, the category is a root item. The **name** represents the actual name or label of the category (this is a translatable field) and the **path** contains the location where all the objects tagged with the respective category item can be found.
 
-### Retrieving objects
+### Objects list
 
 By appending the path of a category to the API endpoint, you can get all the objects which are tagged with that respective category. For example, to get all the objects tagged with *American*, the following path can be used https://www.zuerich.com/data/gastronomy/restaurants/cuisine/american. The result would be a list of all the American cuisine restaurants, for example:
 
@@ -172,7 +172,7 @@ By appending the path of a category to the API endpoint, you can get all the obj
 ```
 
 ## Translations
-Some of the fields support translations. For those fields, the returned value is actually an object containing the language codes as properties and the actual field, translated in that language, as value. The field which do not support translation will just return their value directly. As an example in the above snipped, the **openingDays** field does not support translations, while the **name** supports it.
+Some of the fields support translations. For those fields, the returned value is actually an object containing the language codes as properties and the actual field, translated in that language, as value. The fields which do not support translations will just return their value directly. As an example in the above snipped, the **openingDays** field does not support translations, while the **name** supports it.
 
 ## Schema.org integration
 
@@ -181,26 +181,28 @@ Some of the returned fields in the objects are also schema.org standard. The **@
 - **Place** for places (https://schema.org/Place).
 - **LocalBusiness** for restaurants / cafes (https://schema.org/LocalBusiness).
 
-There are, however, a few custom fields which are not schema.org standard. Here is the full list of the non standard fields:
-### Available on all the types:
-- copyright
-- cc
-- category: a list of categories this object is tagged with on the site.
-- title_teaser: a special title that is used when the object is displayed as a teaser (in lists of results for example).
-- text_teaser: same as the title_teaser, a special description to be used when displaying the object as a teaser.
-- osm_id: the open street map node id.
-- updated: the date and time the object was last updated on the site
-## Place specific fields:
-- detailedInformation: a list with short text items containing some more highlights of the place.
-- zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
-- zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
-- place: can have one or more from the following values: Indoors, Outdoors.
-- openingDays: a comma separated list of all the days when the place is open.
-### LocalBusiness specific fields:
-- detailedInformation: a list with short text items containing some more highlights of the restaurant / cafe.
-- zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
-- zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
-- openingDays: a comma separated list of all the days when the restaurant / cafe is open.
+### Non-standard fields
+
+There are, however, a few custom fields which are not schema.org standard. The full list of non-standard fields, per each object type, can be seen bellow.
+- Available on all the types:
+  - copyright
+  - cc
+  - category: a list of categories this object is tagged with on the site.
+  - title_teaser: a special title that is used when the object is displayed as a teaser (in lists of results for example).
+  - text_teaser: same as the title_teaser, a special description to be used when displaying the object as a teaser.
+  - osm_id: the open street map node id.
+  - updated: the date and time the object was last updated on the site
+- Place specific fields:
+  - detailedInformation: a list with short text items containing some more highlights of the place.
+  - zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
+  - zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
+  - place: can have one or more from the following values: Indoors, Outdoors.
+  - openingDays: a comma separated list of all the days when the place is open.
+- LocalBusiness specific fields:
+  - detailedInformation: a list with short text items containing some more highlights of the restaurant / cafe.
+  - zurichcard: a short text specifying what kind of reductions are available based on the Zurich Card (discount, free entry, zurich card partner)
+  - zurichcardDescription: a text with some more details for the applicable reductions, using the Zurich Card, if any.
+  - openingDays: a comma separated list of all the days when the restaurant / cafe is open.
 
 ## Open Street Map integration
 
